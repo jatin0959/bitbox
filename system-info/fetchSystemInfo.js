@@ -1,9 +1,11 @@
 const si = require('systeminformation');
 const axios = require('axios');
 const { exec } = require('child_process');
+const { Console } = require('console');
 
 async function fetchSystemInfo() {
     try {
+        console.log("Fetching your System Information...");
         const system = await si.chassis();
         const system2 = await si.system();
 
