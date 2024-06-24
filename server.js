@@ -46,6 +46,7 @@ const transporter = nodemailer.createTransport({
     },
   });
 
+//const dbURI = 'mongodb+srv://vp0072003:Starwar007@blog.euwyrii.mongodb.net/bitbox?retryWrites=true&w=majority';
 const dbURI = 'mongodb+srv://bitboxadmin:bitboxadmin@Bitbox.cyggvsi.mongodb.net/Bitbox_db?retryWrites=true&w=majority';
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
@@ -289,9 +290,7 @@ app.post('/register-warranty', upload.single('billPdf'), async (req, res) => {
     try {
         // Check if a warranty with the given serial number already exists
         const existingWarranty = await Warranty.findOne({ serialNumber });
-        if (existingWarranty) {
-            return res.status(400).send('This Device is already registered, pls connect with our customer care at support@bitboxpc.com');
-        }
+        if (existingWarranty) { return res.status(400).send('This Device is already registered, pls connect with our customer care at support@bitboxpc.com');}
         else
         {
             const newWarranty = new Warranty({
@@ -362,6 +361,10 @@ app.post('/verify-warranty', async (req, res) => {
             { verify: true, purchaseDate: new Date(purchaseDate), expiryDate: expiryDateObj },
             { new: true }
         );
+
+        // Option 2: Using toLocaleDateString with specific options to get 'Fri Jun 20 2025'
+const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+const formattedDate2 = expiryDateObj.toLocaleDateString(undefined, options);
         
         if (warranty) {
            
@@ -378,8 +381,8 @@ app.post('/verify-warranty', async (req, res) => {
                     Regards,
                     Team Support
                     BitBox`, // plain text body
-                    html: `<b>Dear Costumer your warranty registration request for serial number ${serialNumber} has been verified.</b> <br>  purchase date - ${purchaseDate}  <br> expiry date - ${expiryDateObj}  <br><br>  best regards, <br>
-                    bitbox alerts`, // html body
+                    html: `<b>Dear Costumer your warranty registration request for serial number ${serialNumber} has been verified.</b> <br>  Purchase date - ${purchaseDate}  <br> Expiry date - ${formattedDate2}  <br><br>  Best regards, <br>
+                    Bitbox Alerts`, // html body
                 });
                
                 
@@ -438,19 +441,21 @@ app.post('/bulk-verify-warranty', upload.single('billPdf'), async (req, res) => 
         const newWarranties = warranties.filter(warranty => !existingSerialNumbers.includes(warranty.serialNumber));
         const duplicateWarranties = warranties.filter(warranty => existingSerialNumbers.includes(warranty.serialNumber));
 
-        if(duplicateWarranties.length > 0)
-        {
-            res.status(201).send(`This Device <b>${response.duplicate.join(', ')}</b> is already registered, pls connect with our customer care at support@bitboxpc.com`);
-        }
-  
-        // Insert new warranties
-        await Warranty.insertMany(newWarranties);
-
         // Prepare the response
         const response = {
             success: newWarranties.map(warranty => warranty.serialNumber),
             duplicate: duplicateWarranties.map(warranty => warranty.serialNumber)
         };
+
+        if(duplicateWarranties.length > 0)
+        {
+            res.status(201).send(`This Device ${response.duplicate.join(', ')} is already registered, please connect with our customer care at support@bitboxpc.com `);
+        }
+  
+        // Insert new warranties
+        await Warranty.insertMany(newWarranties);
+
+        
         res.status(201).send(`All Warranty Request Are Submitted Sucessfully`);
     } catch (error) {
         console.error('Error verifying warranties:', error);
@@ -534,6 +539,41 @@ app.post('/bulk-verify-warranty', upload.single('billPdf'), async (req, res) => 
     } catch (error) {
         console.error('Error verifying warranties:', error);
         res.status(500).send('Error verifying warranties');
+    }
+});
+
+app.get('/send-notification', async (req, res) => {
+    const { email,serialNumber,expiryDate } = req.query; // Extract email from query parameters
+            // Option 2: Using toLocaleDateString with specific options to get 'Fri Jun 20 2025'
+// Convert expiryDate from string to Date object
+const expiryDateObj = new Date(expiryDate);
+
+// Option 2: Using toLocaleDateString with specific options to get 'Fri Jun 20 2025'
+const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+const formattedDate2 = expiryDateObj.toLocaleDateString(undefined, options);
+    try {
+        // Send email using nodemailer transporter
+        const info = await transporter.sendMail({
+            from: '"Bitbox Alerts" <alerts@bitboxpc.com>',
+            to: email,
+            subject: 'Warranty Expiring Alert',
+            text: 'This is a notification email.',
+            html: `<p>Dear Customer,</p> <br> Your Warranty for serial number ${serialNumber} is expiring on ${formattedDate2} <br> Please connect with us on support.bitbox.com to renew your warranty <br><br>Thank you for choosing BitBox. <br><br>
+                    Best Regards,<br>
+                    Team Bitbox
+                    <br><br>
+                    Toll Free: 1800309PATA <br>
+                    E-mail: <a href="">support@bitboxpc.com </a> <br>
+                    web: <a href=" www.bitboxpc.com"> www.bitboxpc.com </a> <br><br>
+                    <img src='https://www.bitboxpc.com/wp-content/uploads/2024/04/BitBox_logo1.png' height="80" width="150"></img>`
+           
+        });
+
+        console.log('Notification email sent:', info.messageId);
+        res.sendStatus(200); // Respond with success status
+    } catch (error) {
+        console.error('Error sending notification email:', error);
+        res.status(500).send('Error sending notification email');
     }
 });
 
@@ -652,26 +692,26 @@ app.post('/admin/drivers/upload', isAuthenticated, upload.single('driverFile'), 
                     Regards,
                     Team Support
                     BitBox`,
-                    html: `<b>We are excited to announce that a new driver update is available for your machine ${model} with version - ${version} </b>! To ensure your BitBox PC remains up-to-date and performs at its best, please download the latest update.
+                    html: `<b>Dear Customer, <br> We are excited to announce that a new driver update is available for your machine ${model} with version - ${version} </br>! To ensure your BitBox PC remains up-to-date and performs at its best, please download the latest update.
                     <br><br>
                     To download the latest driver update :
                     <br>
-                    1.Visit : https://support.bitboxpc.com/
-  <br>
+                    1.Visit : support@bitboxpc.com 
+                    <br>
                     2.Click on “Check Your Device Info”
- <br>
+                    <br>
                     3.Download the Latest Driver
                      
-<br><br>Thank you for choosing BitBox. <br><br>
-Regards,
-Team Bitbox
-<br><br>
-Toll Free: 1800309PATA <br>
-eMail: <a href="">support@bitboxpc.com </a> <br>
-web: <a href=" www.bitboxpc.com"> www.bitboxpc.com </a> <br><br>
+                    <br><br>Thank you for choosing BitBox. <br><br>
+                    Regards,<br>
+                    Team Bitbox
+                    <br><br>
+                    Toll Free: 1800309PATA <br>
+                    eMail: <a href="">support@bitboxpc.com </a> <br>
+                    web: <a href=" www.bitboxpc.com"> www.bitboxpc.com </a> <br><br>
+                    <img src='https://www.bitboxpc.com/wp-content/uploads/2024/04/BitBox_logo1.png' height="80" width="150"></img>
 
-<img src='https://www.bitboxpc.com/wp-content/uploads/2024/04/BitBox_logo1.png' height=80 width=150"></img>
-`,
+                    `,
                 });
             } catch (error) {
                 console.error('Error sending email to user:', error);

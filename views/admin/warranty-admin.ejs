@@ -257,7 +257,7 @@
         checkSerialButton.id = `checkSerialButton${i}`;
         checkSerialButton.addEventListener('click', function() {
             const serialNumber = serialNumberInput.value;
-            fetch('https://support.bitboxpc.com/serial-numbers/' + serialNumber)
+            fetch('http://localhost:5000/serial-numbers/' + serialNumber)
                 .then(response => response.json())
                 .then(data => {
                     const resultElement = document.getElementById(`serialCheckResult${i}`);
