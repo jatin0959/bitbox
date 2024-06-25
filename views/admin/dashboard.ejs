@@ -329,7 +329,7 @@
                         <input type="hidden" name="serialNumber" value="<%= serial.serialNumber %>">
                         <input type="hidden" name="modelNumber" value="<%= serial.modelNumber %>">
                         <input type="" name="newserialNumber" value="" placeholder="Update Serial Number">
-                        <input type="" name="newmodelNumber" value="" placeholder="Update Model Number"  pattern="[A-Z\d\s]*" 
+                        <input type="" name="newmodelNumber" value="" placeholder="Update Model Number"  pattern="[A-Z\d\s-]*" 
                         oninput="this.value = this.value.toUpperCase()">
                         <button type="submit" class="update-btn">Update</button>
                     </form>

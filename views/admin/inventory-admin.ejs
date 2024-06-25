@@ -165,7 +165,7 @@
             <form action="https://support.bitboxpc.com/add-serial" method="POST">
                 
                 <input type="text" name="serialNumber" placeholder="Enter Serial Number" pattern="[A-Z0-9]{10}" required>
-                <input type="text" name="modelNumber" placeholder="Enter Model Number"  pattern="[A-Z\d\s]*" 
+                <input type="text" name="modelNumber" placeholder="Enter Model Number"  pattern="[A-Z\d\s-]*" 
                 oninput="this.value = this.value.toUpperCase()"  required>
                 <button type="submit" class="add-btn">Add Serial Number</button>
             </form>
