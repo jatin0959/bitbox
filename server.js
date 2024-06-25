@@ -381,8 +381,16 @@ const formattedDate2 = expiryDateObj.toLocaleDateString(undefined, options);
                     Regards,
                     Team Support
                     BitBox`, // plain text body
-                    html: `<b>Dear Costumer your warranty registration request for serial number ${serialNumber} has been verified.</b> <br>  Purchase date - ${purchaseDate}  <br> Expiry date - ${formattedDate2}  <br><br>  Best regards, <br>
-                    Bitbox Alerts`, // html body
+                    html: `<b>Dear Costumer your warranty registration request for serial number ${serialNumber} has been verified.</b> <br>  Purchase date - ${purchaseDate}  <br> Expiry date - ${formattedDate2}  
+
+                    
+                   <br><br>Thank you for choosing BitBox. <br><br>
+                    Regards,<br>
+                    Team Bitbox
+                    <br><br>
+                    Toll Free: 1800309PATA <br>
+                    eMail: <a href="">support@bitboxpc.com </a> <br>
+                    web: <a href=" www.bitboxpc.com"> www.bitboxpc.com </a> <br><br>`, // html body
                 });
                
                 
