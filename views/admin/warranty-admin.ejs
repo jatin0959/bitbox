@@ -406,9 +406,9 @@ fetch('/expiring-warranties')
 
         // Model Number Validation
 modelNumbers.forEach(modelNumber => {
-    const modelPattern = /^MT-[A-Z0-9]+$/;
+    const modelPattern = /^[A-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
     if (!modelPattern.test(modelNumber.value)) {
-        alert('Model number must follow the pattern "MT-XXXX" and contain only uppercase letters and digits.');
+        alert('Model number must follow the pattern contain only uppercase letters and digits.');
         event.preventDefault(); // Add event parameter here
         isValid = false;
     }

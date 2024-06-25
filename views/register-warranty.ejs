@@ -155,13 +155,7 @@
                 return false;
             }
 
-            // Model number validation
-            const modelPattern = /^MT-[A-Z0-9]+$/;
-            if (!modelPattern.test(model)) {
-                alert('Model number must follow the pattern "MT-XXXX" and contain only uppercase letters and digits.');
-                event.preventDefault();
-                return false;
-            }
+
 
             // Phone number validation
             if (phoneNumber.length !== 13 || !phoneNumber.startsWith('+91')) {
