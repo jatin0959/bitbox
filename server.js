@@ -390,7 +390,8 @@ const formattedDate2 = expiryDateObj.toLocaleDateString(undefined, options);
                     <br><br>
                     Toll Free: 1800309PATA <br>
                     eMail: <a href="">support@bitboxpc.com </a> <br>
-                    web: <a href=" www.bitboxpc.com"> www.bitboxpc.com </a> <br><br>`, // html body
+                    web: <a href=" www.bitboxpc.com"> www.bitboxpc.com </a> <br><br>
+                    <img src='https://www.bitboxpc.com/wp-content/uploads/2024/04/BitBox_logo1.png' height="80" width="140"></img>`, // html body
                 });
                
                 
@@ -573,7 +574,7 @@ const formattedDate2 = expiryDateObj.toLocaleDateString(undefined, options);
                     Toll Free: 1800309PATA <br>
                     E-mail: <a href="">support@bitboxpc.com </a> <br>
                     web: <a href=" www.bitboxpc.com"> www.bitboxpc.com </a> <br><br>
-                    <img src='https://www.bitboxpc.com/wp-content/uploads/2024/04/BitBox_logo1.png' height="80" width="150"></img>`
+                    <img src='https://www.bitboxpc.com/wp-content/uploads/2024/04/BitBox_logo1.png' height="80" width="140"></img>`
            
         });
 
