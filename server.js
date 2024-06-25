@@ -705,7 +705,7 @@ app.post('/admin/drivers/upload', isAuthenticated, upload.single('driverFile'), 
                     <br><br>
                     To download the latest driver update :
                     <br>
-                    1.Visit : support@bitboxpc.com 
+                    1.Visit : support.bitboxpc.com 
                     <br>
                     2.Click on “Check Your Device Info”
                     <br>
