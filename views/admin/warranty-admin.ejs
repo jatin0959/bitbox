@@ -142,7 +142,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Warrenty Admin Dashboard</h1>
+        <h1>Warranty Admin Dashboard</h1>
         
         
 
@@ -300,8 +300,70 @@
         
         
     </div>
+
+    <div class="expiring-warranties">
+        <h2>Recently Expiring Warranties</h2>
+        <ul></ul>
+    </div>
 </body>
 </html>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+fetch('/expiring-warranties')
+    .then(response => response.json())
+    .then(data => {
+        const warrantiesList = document.querySelector('.expiring-warranties ul');
+        data.forEach(warranty => {
+            const listItem = document.createElement('li');
+            const { name, email, serialNumber, purchaseDate, expiryDate, address, city, pincode, state, phoneNumber, model } = warranty;
+            const formattedExpiryDate = new Date(expiryDate).toLocaleDateString(); // Format expiry date as needed
+
+            listItem.innerHTML = `
+                <p>Name: ${name}</p>
+                <p>Email: ${email}</p>
+                <p>Serial Number: ${serialNumber}</p>
+                <p>Purchase Date: ${new Date(purchaseDate).toLocaleDateString()}</p>
+                <p>Expiry Date: ${formattedExpiryDate}</p>
+                <p>Address: ${address}</p>
+                <p>City: ${city}</p>
+                <p>Pincode: ${pincode}</p>
+                <p>State: ${state}</p>
+                <p>Phone Number: ${phoneNumber}</p>
+                <p>Model: ${model}</p>
+                <button class="notify-button" data-email="${email}" data-serial="${serialNumber}" data-expiry="${expiryDate}">Notify</button>
+            `;
+            warrantiesList.appendChild(listItem);
+        });
+
+        // Add event listeners to Notify buttons
+        warrantiesList.addEventListener('click', (event) => {
+            if (event.target.classList.contains('notify-button')) {
+                const email = event.target.getAttribute('data-email');
+                const serialNumber = event.target.getAttribute('data-serial');
+                const expiryDate = event.target.getAttribute('data-expiry');
+                
+                // Encode parameters for URL
+                const encodedEmail = encodeURIComponent(email);
+                const encodedSerialNumber = encodeURIComponent(serialNumber);
+                const encodedExpiryDate = encodeURIComponent(expiryDate);
+
+                fetch(`/send-notification?email=${encodedEmail}&serialNumber=${encodedSerialNumber}&expiryDate=${encodedExpiryDate}`)
+                    .then(response => {
+                        if (response.ok) {
+                            alert('Notification email sent successfully.');
+                        } else {
+                            alert('Failed to send notification email.');
+                        }
+                    })
+                    .catch(error => console.error('Error sending notification:', error));
+            }
+        });
+    })
+    .catch(error => console.error('Error fetching expiring warranties:', error));
+});
+
+</script>
 
 
 <script>
