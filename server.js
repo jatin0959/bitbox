@@ -139,7 +139,7 @@ app.get('/fetch-system-info', async (req, res) => {
 
 // Fetch Driver Details
 app.get('/latest-driver', async (req, res) => {
-    const model = req.query.serial;
+    const model = req.query.serial.toUpperCase();
     try {
         const latestDriver = await Driver.findOne({ model: model }).sort({ date: -1 });
         console.log(latestDriver);
