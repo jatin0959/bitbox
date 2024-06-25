@@ -567,7 +567,7 @@ const formattedDate2 = expiryDateObj.toLocaleDateString(undefined, options);
             to: email,
             subject: 'Warranty Expiring Alert',
             text: 'This is a notification email.',
-            html: `<p>Dear Customer,</p> <br> Your Warranty for serial number ${serialNumber} is expiring on ${formattedDate2} <br> Please connect with us on support.bitbox.com to renew your warranty <br><br>Thank you for choosing BitBox. <br><br>
+            html: `<p>Dear Customer,</p> <br> Your Warranty for serial number ${serialNumber} is expiring on ${formattedDate2} <br> Please connect with us on support@bitboxpc.com to renew your warranty <br><br>Thank you for choosing BitBox. <br><br>
                     Best Regards,<br>
                     Team Bitbox
                     <br><br>
