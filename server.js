@@ -603,10 +603,10 @@ app.post('/admin/login', (req, res) => {
 
     // Define temporary usernames and passwords for SuperAdmin, DriverAdmin, WarrantyAdmin, and InventoryAdmin
     const credentials = {
-        SuperAdmin: { username: 'Admin', password: 'Bitbox@112233' },
-        DriverAdmin: { username: 'DriverAdmin', password: 'DriverAdmin' },
-        WarrantyAdmin: { username: 'WarrantyAdmin', password: 'WarrantyAdmin' },
-        InventoryAdmin: { username: 'InventoryAdmin', password: 'InventoryAdmin' }
+        SuperAdmin: { username: 'Admin', password: 'Bitbox@000777' },
+        DriverAdmin: { username: 'DriverAdmin', password: 'Bitbox@000777' },
+        WarrantyAdmin: { username: 'WarrantyAdmin', password: 'Bitbox@000777' },
+        InventoryAdmin: { username: 'InventoryAdmin', password: 'Bitbox@000777' }
     };
 
     if (credentials[adminType] && username === credentials[adminType].username && password === credentials[adminType].password) {
