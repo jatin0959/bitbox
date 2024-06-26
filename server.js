@@ -603,7 +603,7 @@ app.post('/admin/login', (req, res) => {
 
     // Define temporary usernames and passwords for SuperAdmin, DriverAdmin, WarrantyAdmin, and InventoryAdmin
     const credentials = {
-        SuperAdmin: { username: 'Admin', password: 'Bitbox@000777' },
+        SuperAdmin: { username: 'SuperAdmin', password: 'Bitbox@000777' },
         DriverAdmin: { username: 'DriverAdmin', password: 'Bitbox@000777' },
         WarrantyAdmin: { username: 'WarrantyAdmin', password: 'Bitbox@000777' },
         InventoryAdmin: { username: 'InventoryAdmin', password: 'Bitbox@000777' }
