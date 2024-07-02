@@ -144,7 +144,7 @@
                  
                     if (allFieldsFilled(data)) {
                       
-                        if (data.manufacturer === "PATA ELECTRIC COMPANY") {
+                        if (data.manufacturer === "PATA ELECTRIC COMPANY" || "PATA Electric Company" || "pata electric company" || "PATA electric company") {
                             loader.style.display = 'none';
                             fetchingInfo.classList.remove('visible');
                             fetchingInfo.classList.add('hidden');
